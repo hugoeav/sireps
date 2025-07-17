@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+    <package name="default" namespace="/" extends="struts-default">     
+            <action name="nuevaSolicitudPV" class="acciones.domicilios.DomicilioAcciones">
+                <result name="success">/solicitudes/solicitudPV.jsp</result>
+                <result name="BLOQUEO">/solicitudes/bloquearSolicitud.jsp</result>
+            </action>
+            <action name="crearUsuario"  class="acciones.usuarios.UsuarioAcciones" method="redirige">
+                
+                <result name="success">/usuarios/registro.jsp</result>  
+            </action>
+            <action name="documentos" class="acciones.documentos.DocumentosAcciones">
+                
+                <result name="success">/usuarios/documentos.jsp</result>  
+            </action>
+             <action name="solicitudes" class="acciones.solicitudes.SolicitudAcciones" method="misSolicitudes">
+                
+                <result name="success">/solicitudes/solicitudes.jsp</result>  
+            </action>
+            <action name="solicitudesAdmin" class="acciones.solicitudes.SolicitudAcciones" method="solicitudes">
+                
+                <result name="success">/administrador/bandeja.jsp</result>  
+            </action>
+            <action name="retroalimentacion" class="acciones.solicitudes.SolicitudAcciones" method="enviaComentarios">
+                <result name="success" type="redirectAction">
+                    <param name="actionName">solicitudDetalleAdmin</param>
+                     <param name="solicitudInput.id_solicitud">${solicitudInput.id_solicitud}</param>
+                </result>
+            </action>
+            <action name="rechazarSoliciiud" class="acciones.solicitudes.SolicitudAcciones" method="rechazaSolicitud">
+                
+                <result name="success">/administrador/solicitudDetalle.jsp</result>  
+            </action>
+            
+            <action name="solicitudDetalle" class="acciones.solicitudes.SolicitudAcciones" method="detalleSolicitud">
+                
+                <result name="success">/solicitudes/solicitudDetalle.jsp</result>  
+            </action>
+            <action name="solicitudDetalleAdmin" class="acciones.solicitudes.SolicitudAcciones" method="detalleSolicitud">
+                
+                <result name="success">/administrador/solicitudDetalle.jsp</result>  
+            </action>
+            <action name="redirigeIndex"  class="acciones.usuarios.UsuarioAcciones" method="redirige">
+                
+                <result name="success">/index.jsp</result>  
+            </action>
+            <action name="iniciarSesion"  class="acciones.usuarios.UsuarioAcciones" method="redirige">
+                
+                <result name="success">/login.jsp</result>  
+            </action>
+            <action name="crearUsuarioVal"  class="acciones.usuarios.UsuarioAcciones" method="redirige">
+                <result name="success">/usuarios/validaUsuario.jsp</result>  
+            </action>
+            
+            <action name="registroPV" class="acciones.solicitudes.SolicitudAcciones" method="registroPrimeraVez">
+               <result name="success" type="redirectAction">
+                    <param name="actionName">solicitudes</param>
+                </result>
+                <result name="error">/solicitudes/solicitudPV.jsp</result>
+            </action>
+            
+            <action name="validaUser" class="acciones.usuarios.UsuarioAcciones" method="validaNuevoUsuario">
+                <result name="redirect" type="redirectAction">
+                    <param name="actionName">crearUsuarioVal</param>
+                </result>
+                <result name="redirectError" type="redirectAction">
+                    <param name="actionName">crearUsuarioVal</param>
+                </result>
+            </action>
+            <action name="login" class="acciones.usuarios.UsuarioAcciones" method="iniciarSesion">
+                <result name="redirect" type="redirectAction">
+                    <param name="actionName">redirigeIndex</param>
+                </result>
+                <result name="redirectError" type="redirectAction">
+                    <param name="actionName">iniciarSesion</param>
+                </result>
+            </action>
+            <action name="logout" class="acciones.usuarios.UsuarioAcciones" method="ejecutarLogout">
+                <result name="redirect" type="redirectAction">
+                    <param name="actionName">redirigeIndex</param>
+                </result>
+                <result name="redirectError" type="redirectAction">
+                    <param name="actionName">iniciarSesion</param>
+                </result>
+            </action>
+            
+            <action name="registro" class="acciones.usuarios.UsuarioAcciones" method="registraUsuario">
+                <result name="redirect" type="redirectAction">
+                    <param name="actionName">redirigeIndex</param>
+                </result>
+                <result name="redirectError" type="redirectAction">
+                    <param name="actionName">crearUsuarioVal</param>
+                </result>
+            </action>
+            
+            <action name="cargarDocs" class="acciones.documentos.DocumentosAcciones" method="precargarArch">
+                <result name="redirect" type="redirectAction">
+                    <param name="actionName">documentos</param>
+                </result>
+                <result name="redirectError" type="redirectAction">
+                    <param name="actionName">documentos</param>
+                </result>
+            </action>
+            
+            <action name="download" class="acciones.documentos.DocumentosAcciones" method="downloadFile">
+                <result name="success">/usuarios/documentos.jsp</result>
+           </action>
+           <action name="reportePdf" class="acciones.reportes.ReportePDFAction" method="pago">
+                <result type="stream">
+                    <param name="contentType">application/pdf</param>
+                    <param name="inputName">inputStream</param>
+                    <param name="contentDisposition">attachment;filename=pago.pdf</param>
+                    <param name="bufferSize">1024</param>
+                </result>
+           </action>
+            
+            <action name="cedulaExp" class="acciones.reportes.ReportePDFAction" method="registro">
+                <result type="stream">
+                    <param name="contentType">application/pdf</param>
+                    <param name="inputName">inputStream</param>
+                    <param name="contentDisposition">attachment;filename=registro.pdf</param>
+                    <param name="bufferSize">1024</param>
+                </result>
+            </action>
+            
+            <action name="generarRegistroPDF" class="acciones.reportes.ReportePDFAction" method="registro">
+                <result name="success" type="stream">
+                    <param name="contentType">application/pdf</param>
+                    <param name="inputName">inputStream</param>
+                    <param name="contentDisposition">inline;filename=registro.pdf</param>
+                    <param name="bufferSize">1024</param>
+                </result>
+            </action>
+            
+             <action name="generarRegistro"  class="acciones.registros.RegistrosAcciones" method="nuevoRegistro">
+                
+                <result name="success" type="redirectAction">
+                    <param name="actionName">solicitudDetalleAdmin</param>
+                     <param name="solicitudInput.id_solicitud">${solicitudInput.id_solicitud}</param>
+                </result>
+            </action>
+           <action name="variables" class="acciones.variables.VariablesAcciones">
+                
+                <result name="success">/administrador/variables.jsp</result>  
+            </action>
+            <action name="actualizaHojaPago" class="acciones.variables.VariablesAcciones" method="actualizaDatosPago">
+                 <result name="success" type="redirectAction">
+                    <param name="actionName">variables</param>
+                </result>
+            </action>
+            
+            
+            
+            <action name="cargarRegistro" class="acciones.documentos.DocumentosAcciones" method="cargarRegistro">
+                 <result name="success" type="redirectAction">
+                    <param name="actionName">solicitudDetalleAdmin</param>
+                     <param name="solicitudInput.id_solicitud">${solicitudInput.id_solicitud}</param>
+                </result>
+            </action>
+            
+    </package>
+    <package name="defaultt" namespace="/" extends="json-default">
+         <action name="obtenerDatosCP" class="acciones.domicilios.DomicilioAcciones" method="obtener_datos_cp">
+            <result type="json" />
+        </action>
+        <action name="obtenerMunicipios" class="acciones.domicilios.DomicilioAcciones" method="obtener_municipios">
+            <result type="json" />
+        </action>
+        
+        <action name="obtenerLocalidades" class="acciones.domicilios.DomicilioAcciones" method="obtener_localidades">
+            <result type="json" />
+        </action>
+    </package>
+    <constant name="struts.multipart.maxSize" value="52428800" /> <!--Tamaño de carga de archivo 50MB-->
+    <constant name="struts.multipart.enabled" value="true" />
+    <constant name="struts.action.excludePattern" value="/rs_pedidos,/requis_crea,/rs_detped_sol,/codeAddress"/>
+</struts> 

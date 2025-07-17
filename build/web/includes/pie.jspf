@@ -1,0 +1,20 @@
+<%-- 
+    Document   : footer
+    Created on : 13/01/2025, 11:25:48 AM
+    Author     : Informatica
+--%>
+<%  
+        session.removeAttribute("resultMessage");
+    %>
+
+<footer class=" text-center text-white py-4" style="background-color: #3c8b41;"> 
+    <div class="container">
+        <p>Servicios de Salud de San Luis Potosí, Prolongación Calzada de Guadalupe #5850 Lomas de la virgen CP 78380 | Tel: 8341100 Ext 21351</p>
+        <p style="font-size: 0.8em;">
+            Consulta nuestro <a href="aviso_privacidad" class="text-white" style="text-decoration: underline;">aviso de privacidad</a>
+        </p>
+        
+    </div>
+</footer>
+</body>
+</html>
